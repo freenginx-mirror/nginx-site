@@ -8,6 +8,16 @@
 
 <news name="freenginx news" link="/" lang="en">
 
+<event date="2024-07-09">
+<para>
+<link doc="en/download.xml">freenginx-1.27.2</link>
+mainline version has been released,
+featuring
+<link doc="en/docs/ngx_core_module.xml" id="error_log">rate limiting</link>
+for error logs.
+</para>
+</event>
+
 <event date="2024-06-04">
 <para>
 <link doc="en/download.xml">freenginx-1.27.1</link>
