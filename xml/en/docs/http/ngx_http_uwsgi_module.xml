@@ -10,7 +10,7 @@
 <module name="Module ngx_http_uwsgi_module"
         link="/en/docs/http/ngx_http_uwsgi_module.html"
         lang="en"
-        rev="51">
+        rev="52">
 
 <section id="summary">
 
@@ -640,6 +640,12 @@ with another value, such a response will be cached
 taking into account the corresponding request header fields (1.7.7).
 </listitem>
 
+<listitem>
+If the header includes the <header>Age</header> field
+and caching time is set with the <header>Cache-Control</header> field,
+caching time is reduced accordingly (1.27.3).
+</listitem>
+
 </list>
 Processing of one or more of these response header fields can be disabled
 using the <link id="uwsgi_ignore_headers"/> directive.
@@ -731,7 +737,7 @@ The following fields can be ignored: <header>X-Accel-Redirect</header>,
 <header>X-Accel-Buffering</header> (1.1.6),
 <header>X-Accel-Charset</header> (1.1.6), <header>Expires</header>,
 <header>Cache-Control</header>, <header>Set-Cookie</header> (0.8.44),
-and <header>Vary</header> (1.7.7).
+<header>Vary</header> (1.7.7), and <header>Age</header> (1.27.3).
 </para>
 
 <para>
@@ -742,7 +748,7 @@ effect:
 <listitem>
 <header>X-Accel-Expires</header>, <header>Expires</header>,
 <header>Cache-Control</header>, <header>Set-Cookie</header>,
-and <header>Vary</header>
+<header>Vary</header>, and <header>Age</header>
 set the parameters of response <link id="uwsgi_cache_valid">caching</link>;
 </listitem>
 

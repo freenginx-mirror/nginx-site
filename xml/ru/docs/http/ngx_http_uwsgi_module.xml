@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_uwsgi_module"
         link="/ru/docs/http/ngx_http_uwsgi_module.html"
         lang="ru"
-        rev="51">
+        rev="52">
 
 <section id="summary">
 
@@ -639,6 +639,12 @@ uwsgi_cache_valid any      1m;
 с учётом соответствующих полей заголовка запроса (1.7.7).
 </listitem>
 
+<listitem>
+Если в заголовке ответа есть поле <header>Age</header>
+и время кэширования определяется по полю <header>Cache-Control</header>,
+время кэширования будет соответственно уменьшено (1.27.3).
+</listitem>
+
 </list>
 Обработка одного или более из этих полей заголовка может быть отключена
 при помощи директивы <link id="uwsgi_ignore_headers"/>.
@@ -728,8 +734,8 @@ nginx не передаёт клиенту поля заголовка <header>S
 <header>X-Accel-Expires</header>, <header>X-Accel-Limit-Rate</header> (1.1.6),
 <header>X-Accel-Buffering</header> (1.1.6),
 <header>X-Accel-Charset</header> (1.1.6), <header>Expires</header>,
-<header>Cache-Control</header>, <header>Set-Cookie</header> (0.8.44)
-и <header>Vary</header> (1.7.7).
+<header>Cache-Control</header>, <header>Set-Cookie</header> (0.8.44),
+<header>Vary</header> (1.7.7) и <header>Age</header> (1.27.3).
 </para>
 
 <para>
@@ -738,8 +744,8 @@ nginx не передаёт клиенту поля заголовка <header>S
 
 <listitem>
 <header>X-Accel-Expires</header>, <header>Expires</header>,
-<header>Cache-Control</header>, <header>Set-Cookie</header>
-и <header>Vary</header>
+<header>Cache-Control</header>, <header>Set-Cookie</header>,
+<header>Vary</header> и <header>Age</header>
 задают параметры <link id="uwsgi_cache_valid">кэширования</link> ответа;
 </listitem>
 
