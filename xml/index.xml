@@ -8,6 +8,19 @@
 
 <news name="freenginx news" link="/" lang="en">
 
+<event date="2024-08-13">
+<para>
+<link doc="en/download.xml">freenginx-1.27.3</link>
+mainline version has been released,
+featuring
+improved handling of keepalive connections during graceful shutdown
+of old worker processes
+and
+<link doc="en/docs/http/ngx_http_proxy_module.xml" id="proxy_cache_valid">Age
+header</link> support in cache.
+</para>
+</event>
+
 <event date="2024-07-09">
 <para>
 <link doc="en/download.xml">freenginx-1.27.2</link>

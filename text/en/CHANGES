@@ -1,4 +1,19 @@
 
+Changes with freenginx 1.27.3                                    13 Aug 2024
+
+    *) Change: now the "Age" backend response header line is taken into
+       account when caching.
+       Thanks to Hiroaki Nakamura.
+
+    *) Feature: the $upstream_cache_age variable.
+
+    *) Change: during graceful shutdown of old worker processes keepalive
+       connections are now closed only after timeout specified with the
+       "lingering_timeout" directive expires.
+
+    *) Feature: improvements in building on Windows.
+
+
 Changes with freenginx 1.27.2                                    09 Jul 2024
 
     *) Feature: now maximum error logging rate can be limited with the
