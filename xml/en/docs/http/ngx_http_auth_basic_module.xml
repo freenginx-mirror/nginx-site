@@ -10,7 +10,7 @@
 <module name="Module ngx_http_auth_basic_module"
         link="/en/docs/http/ngx_http_auth_basic_module.html"
         lang="en"
-        rev="11">
+        rev="12">
 
 <section id="summary">
 
@@ -89,18 +89,37 @@ The <value>file</value> name can contain variables.
 </para>
 
 <para>
-The following password types are supported:
+Passwords are expected to be encrypted by the
+<link url="https://en.wikipedia.org/wiki/Crypt_(C)">crypt() function</link>.
+All password hashing methods as supported by the OS can be used.
+In particular, the following <c-func>crypt</c-func> hashing methods are
+commonly available:
+
 <list type="bullet">
 
 <listitem>
-encrypted with the <c-func>crypt</c-func> function; can be generated using
-the “<command>htpasswd</command>” utility from the Apache HTTP Server
-distribution or the “<command>openssl passwd</command>” command;
+MD5-based <c-func>crypt</c-func> method, <literal>$1$</literal>;
 </listitem>
 
 <listitem>
-hashed with the Apache variant of the MD5-based password algorithm (apr1);
-can be generated with the same tools;
+SHA256-based <c-func>crypt</c-func> method, <literal>$5$</literal>;
+</listitem>
+
+<listitem>
+SHA512-based <c-func>crypt</c-func> method, <literal>$6$</literal>.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Additionally, the following cross-platform password types are supported:
+
+<list type="bullet">
+
+<listitem>
+hashed with the Apache variant of the MD5-based <c-func>crypt</c-func>
+method (<literal>$apr1$</literal>);
 </listitem>
 
 <listitem>
@@ -108,21 +127,34 @@ specified by the
 “<literal>{</literal><value>scheme</value><literal>}</literal><value>data</value>”
 syntax (1.0.3+) as described in
 <link url="https://datatracker.ietf.org/doc/html/rfc2307#section-5.3">RFC 2307</link>;
-currently implemented schemes include <literal>PLAIN</literal> (an example one,
-should not be used), <literal>SHA</literal> (1.3.13) (plain SHA-1
-hashing, should not be used) and <literal>SSHA</literal> (salted SHA-1 hashing,
-used by some software packages, notably OpenLDAP and Dovecot).
-<note>
-Support for <literal>SHA</literal> scheme was added only to aid
-in migration from other web servers.
-It should not be used for new passwords, since unsalted SHA-1 hashing
-that it employs is vulnerable to
-<link url="http://en.wikipedia.org/wiki/Rainbow_attack">rainbow table</link>
-attacks.
-</note>
+supported schemes are
+<literal>PLAIN</literal> (an example one, should not be used),
+<literal>SHA</literal> (1.3.13) (plain SHA-1 hashing,
+insecure and should not be used),
+and <literal>SSHA</literal> (salted SHA-1 hashing,
+also insecure by today's standards).
 </listitem>
 
 </list>
+</para>
+
+<para>
+Password hashes for common hashing methods can be generated using
+the “<command>openssl passwd</command>” command, for example:
+
+<example>
+$ openssl passwd -apr1 secret
+$apr1$x/muFo1c$zwUN24M2TEq.6wg0AZacn0
+</example>
+<example>
+$ openssl passwd -6 secret
+$6$FjZ1ss8ytcGmrGFY$1fopTJLuLUGCRlv2YcRPIsZk9uaD9NBOGcKsUay/BLV3RR1ol0ONS08oPTVqA4XBkZ44M7OL4K6NjP9xPKShP0
+</example>
+</para>
+
+<para>
+Note that HTTP Basic Authentication implies password validation on each
+request, and password hashing method should be choosen with this in mind.
 </para>
 
 </directive>
