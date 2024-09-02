@@ -9,7 +9,7 @@
 <module name="Модуль ngx_stream_ssl_module"
         link="/ru/docs/stream/ngx_stream_ssl_module.html"
         lang="ru"
-        rev="32">
+        rev="33">
 
 <section id="summary">
 
@@ -719,6 +719,12 @@ AES128-SHA:AES256-SHA:0x00ff
 <tag-desc>
 возвращает SHA1-отпечаток клиентского сертификата
 для установленного SSL-соединения (1.11.8);
+</tag-desc>
+
+<tag-name id="var_ssl_client_fingerprint_sha256"><var>$ssl_client_fingerprint_sha256</var></tag-name>
+<tag-desc>
+возвращает SHA256-отпечаток клиентского сертификата
+для установленного SSL-соединения (1.27.4);
 </tag-desc>
 
 <tag-name id="var_ssl_client_i_dn"><var>$ssl_client_i_dn</var></tag-name>
