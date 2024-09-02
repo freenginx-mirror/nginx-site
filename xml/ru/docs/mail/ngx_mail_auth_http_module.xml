@@ -10,7 +10,7 @@
 <module name="Модуль ngx_mail_auth_http_module"
         link="/ru/docs/mail/ngx_mail_auth_http_module.html"
         lang="ru"
-        rev="12">
+        rev="13">
 
 <section id="directives" name="Директивы">
 
@@ -227,7 +227,8 @@ url="https://developers.google.com/gmail/imap/xoauth2-protocol#error_response"
 Если клиентский сертификат был предоставлен,
 информация о нём передаётся в следующих заголовках запроса:
 <header>Auth-SSL-Subject</header>, <header>Auth-SSL-Issuer</header>,
-<header>Auth-SSL-Serial</header> и <header>Auth-SSL-Fingerprint</header>.
+<header>Auth-SSL-Serial</header>, <header>Auth-SSL-Fingerprint</header>
+и <header>Auth-SSL-Fingerprint-SHA256</header> (1.27.4).
 Если директива <link id="auth_http_pass_client_cert"/> включена,
 сам сертификат передаётся в заголовке
 <header>Auth-SSL-Cert</header>.
@@ -252,6 +253,7 @@ Auth-SSL-Subject: /CN=example.com
 Auth-SSL-Issuer: /CN=example.com
 Auth-SSL-Serial: C07AD56B846B5BFF
 Auth-SSL-Fingerprint: 29d6a80a123d13355ed16b4b04605e29cb55a5ad
+Auth-SSL-Fingerprint-SHA256: 8b489b945bd45dd8e229e40f4e9bbc2ee13c70dd82831e197e4084bccc0476d2
 </example>
 </para>
 

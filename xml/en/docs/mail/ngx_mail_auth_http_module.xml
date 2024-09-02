@@ -10,7 +10,7 @@
 <module name="Module ngx_mail_auth_http_module"
         link="/en/docs/mail/ngx_mail_auth_http_module.html"
         lang="en"
-        rev="12">
+        rev="13">
 
 <section id="directives" name="Directives">
 
@@ -229,7 +229,8 @@ did not contain the <value>reason</value> string.
 When the client certificate was present,
 its details are passed in the following request headers:
 <header>Auth-SSL-Subject</header>, <header>Auth-SSL-Issuer</header>,
-<header>Auth-SSL-Serial</header>, and <header>Auth-SSL-Fingerprint</header>.
+<header>Auth-SSL-Serial</header>, <header>Auth-SSL-Fingerprint</header>,
+and <header>Auth-SSL-Fingerprint-SHA256</header> (1.27.4).
 If <link id="auth_http_pass_client_cert"/> is enabled,
 the certificate itself is passed in the
 <header>Auth-SSL-Cert</header> header.
@@ -254,6 +255,7 @@ Auth-SSL-Subject: /CN=example.com
 Auth-SSL-Issuer: /CN=example.com
 Auth-SSL-Serial: C07AD56B846B5BFF
 Auth-SSL-Fingerprint: 29d6a80a123d13355ed16b4b04605e29cb55a5ad
+Auth-SSL-Fingerprint-SHA256: 8b489b945bd45dd8e229e40f4e9bbc2ee13c70dd82831e197e4084bccc0476d2
 </example>
 </para>
 
