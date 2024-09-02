@@ -10,7 +10,7 @@
 <module name="Module ngx_http_charset_module"
         link="/en/docs/http/ngx_http_charset_module.html"
         lang="en"
-        rev="5">
+        rev="6">
 
 <section id="summary">
 
@@ -165,8 +165,8 @@ are provided in the distribution files <path>conf/koi-win</path>,
 
 <directive name="charset_types">
 <syntax><value>mime-type</value> ...</syntax>
-<default>text/html text/xml text/plain text/vnd.wap.wml
-application/javascript application/rss+xml</default>
+<default>text/html text/xml text/javascript text/plain text/markdown
+text/vnd.wap.wml application/javascript application/rss+xml</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
@@ -180,8 +180,12 @@ The special value “<literal>*</literal>” matches any MIME type (0.8.29).
 
 <para>
 <note>
-Until version 1.5.4, “<literal>application/x-javascript</literal>” was used
+Prior to version 1.5.4, “<literal>application/x-javascript</literal>” was used
 as the default MIME type instead of “<literal>application/javascript</literal>”.
+</note>
+<note>
+Prior to version 1.27.4, the default value did not include
+“<literal>text/javascript</literal>” and “<literal>text/markdown</literal>”.
 </note>
 </para>
 
