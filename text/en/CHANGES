@@ -1,4 +1,25 @@
 
+Changes with freenginx 1.27.4                                    03 Sep 2024
+
+    *) Feature: the $ssl_client_fingerprint_sha256 variable.
+
+    *) Feature: the "Auth-SSL-Fingerprint-SHA256 header line is now passed
+       to the mail proxy authentication server.
+
+    *) Change: MIME type for the "js" extension has been changed to
+       "text/javascript", the "mjs" extension now uses the "text/javascript"
+       MIME type, and the "md" and "markdown" extensions now use the
+       "text/markdown" MIME type; the default value of the "charset_types"
+       directive now includes "text/javascript" and "text/markdown".
+
+    *) Bugfix: a segmentation fault might occur in a worker process if the
+       ngx_http_mp4_module was used; the bug had appeared in 1.5.13.
+
+    *) Bugfix: a segmentation fault might occur in a worker process when
+       handling requests with the "Expect: 100-continue" request header
+       line; the bug had appeared in 1.27.0.
+
+
 Changes with freenginx 1.27.3                                    13 Aug 2024
 
     *) Change: now the "Age" backend response header line is taken into
