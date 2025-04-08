@@ -10,7 +10,7 @@
 <module name="Module ngx_mail_core_module"
         link="/en/docs/mail/ngx_mail_core_module.html"
         lang="en"
-        rev="23">
+        rev="24">
 
 <section id="summary">
 
@@ -84,6 +84,7 @@ mail {
     [<literal>sndbuf</literal>=<value>size</value>]
     [<literal>bind</literal>]
     [<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>]
+    [<literal>multipath</literal>]
     [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
 <default/>
 <context>server</context>
@@ -198,6 +199,15 @@ whether an IPv6 socket listening on a wildcard address <literal>[::]</literal>
 will accept only IPv6 connections or both IPv6 and IPv4 connections.
 This parameter is turned on by default.
 It can only be set once on start.
+</tag-desc>
+
+<tag-name id="multipath">
+<literal>multipath</literal>
+</tag-name>
+<tag-desc>
+instructs to use
+<link url="https://en.wikipedia.org/wiki/Multipath_TCP">Multipath TCP</link>
+(the <c-def>IPPROTO_MPTCP</c-def> protocol) on Linux (1.27.5).
 </tag-desc>
 
 <tag-name>

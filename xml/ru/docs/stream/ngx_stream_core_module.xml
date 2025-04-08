@@ -9,7 +9,7 @@
 <module name="Модуль ngx_stream_core_module"
         link="/ru/docs/stream/ngx_stream_core_module.html"
         lang="ru"
-        rev="38">
+        rev="39">
 
 <section id="summary">
 
@@ -89,6 +89,7 @@ stream {
     [<literal>bind</literal>]
     [<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>]
     [<literal>reuseport</literal>]
+    [<literal>multipath</literal>]
     [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
 <default/>
 <context>server</context>
@@ -233,6 +234,15 @@ FreeBSD, DragonFly BSD и macOS,
 принимать только IPv6-соединения, или же одновременно IPv6- и IPv4-соединения.
 По умолчанию параметр включён.
 Установить его можно только один раз на старте.
+</tag-desc>
+
+<tag-name id="multipath">
+<literal>multipath</literal>
+</tag-name>
+<tag-desc>
+указывает использовать
+<link url="https://en.wikipedia.org/wiki/Multipath_TCP">Multipath TCP</link>
+(протокол <c-def>IPPROTO_MPTCP</c-def>) на Linux (1.27.5).
 </tag-desc>
 
 <tag-name id="reuseport">
