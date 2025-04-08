@@ -1,4 +1,22 @@
 
+Changes with freenginx 1.27.5                                    08 Apr 2025
+
+    *) Feature: the "multipath" parameter of the "listen" directive.
+       Thanks to Maxime Dourov and Anthony Doeraene.
+
+    *) Change: SSL session reuse is no longer allowed between servers with
+       different certificates set by the "ssl_trusted_certificate" directive
+       if client SSL certificate verification is enabled.
+
+    *) Workaround: when using TLSv1.3 with OpenSSL 1.1.1e or newer, it was
+       possible to reuse an SSL session in a different virtual server
+       context, notably with different certificates set by the
+       "ssl_client_certificate" directive.
+
+    *) Workaround: "gzip filter failed to use preallocated memory" alerts
+       appeared in logs when using zlib-ng.
+
+
 Changes with freenginx 1.27.4                                    03 Sep 2024
 
     *) Feature: the $ssl_client_fingerprint_sha256 variable.
