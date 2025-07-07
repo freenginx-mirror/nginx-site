@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_core_module"
         link="/ru/docs/http/ngx_http_core_module.html"
         lang="ru"
-        rev="110">
+        rev="111">
 
 <section id="directives" name="Директивы">
 
@@ -354,6 +354,34 @@ chunked encoding, несмотря на требования стандарта.
 </directive>
 
 
+<directive name="client_body_min_rate">
+<syntax><value>скорость</value></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.29.0</appeared-in>
+
+<para>
+Задаёт минимальную требуемую скорость чтения тела запроса клиента,
+в байтах в секунду.
+Например:
+<example>
+client_body_min_rate 10k;
+</example>
+</para>
+
+<para>
+Если средняя скорость чтения тела запроса клиента
+с момента последней установки <link id="client_body_timeout">таймаута</link>
+ниже заданного значения,
+таймаут не будет обновляться при операциях чтения,
+и по истечении таймаута обработка запроса будет прекращена.
+</para>
+
+</directive>
+
+
 <directive name="client_body_temp_path">
 <syntax>
     <value>путь</value>
@@ -393,6 +421,8 @@ client_body_temp_path /spool/nginx/client_temp 1 2;
 Таймаут устанавливается не на всю передачу тела запроса,
 а только между двумя последовательными операциями чтения.
 Если по истечении этого времени клиент ничего не передаст,
+или количество полученных от клиента данных будет недостаточно для поддержания
+<link id="client_body_min_rate">минимальной скорости</link>,
 обработка запроса прекращается с ошибкой
 <http-status code="408" text="Request Time-out"/>.
 </para>
@@ -2384,6 +2414,34 @@ location / {
 </directive>
 
 
+<directive name="send_min_rate">
+<syntax><value>скорость</value></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.29.0</appeared-in>
+
+<para>
+Задаёт минимальную требуемую скорость передачи ответа клиенту,
+в байтах в секунду.
+Например:
+<example>
+send_min_rate 10k;
+</example>
+</para>
+
+<para>
+Если средняя скорость передачи ответа
+с момента последней установки <link id="send_timeout">таймаута</link>
+ниже установленного значения,
+таймаут не будет обновляться при операциях записи,
+и по истечении таймаута соединение будет закрыто.
+</para>
+
+</directive>
+
+
 <directive name="send_timeout">
 <syntax><value>время</value></syntax>
 <default>60s</default>
@@ -2396,6 +2454,8 @@ location / {
 Таймаут устанавливается не на всю передачу ответа,
 а только между двумя операциями записи.
 Если по истечении этого времени клиент ничего не примет,
+или количество переданных клиенту данных будет недостаточно для поддержания
+<link id="send_min_rate">минимальной скорости</link>,
 соединение будет закрыто.
 </para>
 

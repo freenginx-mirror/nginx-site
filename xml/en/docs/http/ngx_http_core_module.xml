@@ -10,7 +10,7 @@
 <module name="Module ngx_http_core_module"
         link="/en/docs/http/ngx_http_core_module.html"
         lang="en"
-        rev="110">
+        rev="111">
 
 <section id="directives" name="Directives">
 
@@ -356,6 +356,34 @@ variable, to save the number of copy operations involved.
 </directive>
 
 
+<directive name="client_body_min_rate">
+<syntax><value>rate</value></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.29.0</appeared-in>
+
+<para>
+Specifies the minimum required rate for reading client request body,
+in bytes per second.
+For example:
+<example>
+client_body_min_rate 10k;
+</example>
+</para>
+
+<para>
+If the client request body reading rate
+since the <link id="client_body_timeout">timeout</link> was last set
+is below this value,
+the timeout will not be updated on read operations,
+and the request will be terminated when the timeout expires.
+</para>
+
+</directive>
+
+
 <directive name="client_body_temp_path">
 <syntax>
     <value>path</value>
@@ -395,8 +423,10 @@ a path to a temporary file might look like this:
 Defines a timeout for reading client request body.
 The timeout is set only for a period between two successive read operations,
 not for the transmission of the whole request body.
-If a client does not transmit anything within this time, the
-request is terminated with the
+If no data is received within this time,
+or the amount of data is insufficient to maintain
+the <link id="client_body_min_rate">minimum rate</link>,
+the request is terminated with the
 <http-status code="408" text="Request Time-out"/>
 error.
 </para>
@@ -2387,6 +2417,34 @@ This directive is ignored on Linux, Solaris, and Windows.
 </directive>
 
 
+<directive name="send_min_rate">
+<syntax><value>rate</value></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.29.0</appeared-in>
+
+<para>
+Specifies the minimum required data transmission rate to the client,
+in bytes per second.
+For example:
+<example>
+send_min_rate 10k;
+</example>
+</para>
+
+<para>
+If the average transmission rate
+since the <link id="send_timeout">send timeout</link> was last set
+is below this value,
+the timeout will not be updated on write operations,
+and the connection will be closed when the timeout expires.
+</para>
+
+</directive>
+
+
 <directive name="send_timeout">
 <syntax><value>time</value></syntax>
 <default>60s</default>
@@ -2398,7 +2456,9 @@ This directive is ignored on Linux, Solaris, and Windows.
 Sets a timeout for transmitting a response to the client.
 The timeout is set only between two successive write operations,
 not for the transmission of the whole response.
-If the client does not receive anything within this time,
+If no data is sent within this time,
+or the amount of data is insufficient to maintain
+the <link id="send_min_rate">minimum rate</link>,
 the connection is closed.
 </para>
 
