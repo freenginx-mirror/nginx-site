@@ -1204,9 +1204,9 @@ Controls how nginx closes client connections.
 <para>
 The default value “<literal>on</literal>” instructs nginx to
 <link id="lingering_timeout">wait for</link> and
-<link id="lingering_time">process</link> additional data from a client
-before fully closing a connection, but only
-if heuristics suggests that a client may be sending more data.
+<link id="lingering_time">process</link> additional data from the client
+before fully closing the connection, but only
+if heuristics suggests that the client may be sending more data.
 </para>
 
 <para>
@@ -1240,7 +1240,7 @@ the directive must be specified on the <link id="server"/> level (1.19.1).
 <para>
 When <link id="lingering_close"/> is in effect,
 this directive specifies the maximum time during which nginx
-will process (read and ignore) additional data coming from a client.
+will process (read and ignore) additional data coming from the client.
 After that, the connection will be closed, even if there will be
 more data.
 </para>
