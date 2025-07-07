@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Maxim Dounin
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Модуль ngx_mail_limit_conn_module"
+        link="/ru/docs/mail/ngx_mail_limit_conn_module.html"
+        lang="ru"
+        rev="1">
+
+<section id="summary">
+
+<para>
+Модуль <literal>ngx_mail_limit_conn_module</literal> (1.29.0)
+позволяет ограничить число соединений по заданному ключу,
+в частности, число соединений от одного аутентифицированного пользователя.
+</para>
+
+<para>
+Соединения ограничиваются после
+<link url="ngx_mail_auth_http_module.xml">аутентификации</link>,
+так что в качестве ключа может использоваться имя пользователя,
+возвращённое сервером аутентификации,
+а также произвольные поля заголовка ответа сервера аутентификации.
+</para>
+
+</section>
+
+
+<section id="example" name="Пример конфигурации">
+
+<para>
+<example>
+mail {
+    limit_conn_zone $remote_user zone=user:10m;
+
+    ...
+
+    server {
+
+        ...
+
+        limit_conn user 10;
+    }
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Директивы">
+
+<directive name="limit_conn">
+<syntax><value>зона</value> <value>число</value></syntax>
+<default/>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Задаёт зону разделяемой памяти и максимально допустимое число соединений
+для одного значения ключа.
+При превышении этого числа сервер вернёт ошибку и закроет соединение.
+Например, директивы
+<example>
+limit_conn_zone $remote_user zone=user:10m;
+
+server {
+    limit_conn user 5;
+</example>
+разрешают одновременно обрабатывать не более пяти соединений
+от одного аутентифицированного пользователя.
+</para>
+
+<para>
+Следует иметь в виду, что
+не все почтовые клиенты поддерживают используемые коды ответов,
+и могут предложить пользователю повторно ввести пароль.
+Поэтому не рекомендуется устанавливать слишком низкие ограничения,
+легко достижимые корректно ведущими себя почтовыми клиентами.
+</para>
+
+<para>
+Директив <literal>limit_conn</literal> может быть несколько.
+Например, следующая конфигурация ограничивает число соединений
+от одного пользователя и в то же время ограничивает число соединений
+для всех пользователей в домене, возвращённом сервером аутентификации:
+<example>
+limit_conn_zone $remote_user zone=user:10m;
+limit_conn_zone $auth_http_domain zone=domain:10m;
+
+server {
+    ...
+    limit_conn user 5;
+    limit_conn domain 100;
+}
+</example>
+</para>
+
+<para>
+Директивы наследуются с предыдущего уровня конфигурации при условии, что
+на данном уровне не описаны свои директивы <literal>limit_conn</literal>.
+</para>
+
+</directive>
+
+
+<directive name="limit_conn_dry_run">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Включает режим пробного запуска.
+В данном режиме число соединений не ограничивается, однако
+в зоне разделяемой памяти текущее число избыточных соединений учитывается
+как обычно.
+</para>
+
+</directive>
+
+
+<directive name="limit_conn_log_level">
+<syntax>
+<literal>info</literal> |
+<literal>notice</literal> |
+<literal>warn</literal> |
+<literal>error</literal></syntax>
+<default>error</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Задаёт желаемый уровень записи в лог случаев ограничения
+числа соединений.
+</para>
+
+</directive>
+
+
+<directive name="limit_conn_zone">
+<syntax>
+    <value>ключ</value>
+    <literal>zone</literal>=<value>название</value>:<value>размер</value></syntax>
+<default/>
+<context>mail</context>
+
+<para>
+Задаёт параметры зоны разделяемой памяти, которая хранит состояние
+для разных значений ключа.
+Состояние в частности содержит текущее число соединений.
+</para>
+
+<para>
+В качестве ключа можно использовать:
+
+<list type="tag">
+
+<tag-name><var>$remote_addr</var></tag-name>
+<tag-desc>
+адрес клиента
+</tag-desc>
+
+<tag-name><var>$remote_user</var></tag-name>
+<tag-desc>
+имя пользователя, использованное для аутентификации
+</tag-desc>
+
+<tag-name><var>$auth_http_</var><value>имя</value></tag-name>
+<tag-desc>
+произвольное поле заголовка ответа сервера аутентификации;
+последняя часть имени переменной соответствует имени поля, приведённому
+к нижнему регистру, с заменой символов тире на символы подчёркивания
+</tag-desc>
+
+</list>
+
+Запросы с пустым значением ключа не учитываются.
+</para>
+
+<para>
+Пример использования:
+<example>
+limit_conn_zone $remote_user zone=user:10m;
+</example>
+Здесь в качестве ключа используется имя пользователя.
+</para>
+
+<para>
+Размер состояния на 32-битных платформах
+равен 32 байтам для ключей длиной до 12 байт включительно,
+и 64 байтам для ключей от 13 до 44 байт.
+Размер состояния на 64-битных платформах
+равен 64 байтам для ключей длиной до 28 байт включительно.
+В зоне размером 1 мегабайт может разместиться около 32 тысяч состояний
+размером 32 байта или 16 тысяч состояний размером 64 байта.
+При переполнении зоны сервер вернёт ошибку и закроет соединение.
+</para>
+
+</directive>
+
+</section>
+
+</module>

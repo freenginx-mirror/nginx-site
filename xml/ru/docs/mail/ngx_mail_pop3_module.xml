@@ -78,7 +78,7 @@
 
 <directive name="pop3_capabilities">
 <syntax><value>расширение</value> ...</syntax>
-<default>TOP USER UIDL</default>
+<default>TOP USER UIDL RESP-CODES</default>
 <context>mail</context>
 <context>server</context>
 
@@ -106,6 +106,13 @@
 <para>
 Текущий список стандартизованных расширений опубликован на
 <link url="http://www.iana.org/assignments/pop3-extension-mechanism">www.iana.org</link>.
+</para>
+
+<para>
+<note>
+До версии 1.29.0 по умолчанию использовалось значение
+<literal>TOP USER UIDL</literal>.
+</note>
 </para>
 
 </directive>

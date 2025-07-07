@@ -8,7 +8,7 @@
 <article name="freenginx documentation"
          link="/en/docs/"
          lang="en"
-         rev="53"
+         rev="54"
          toc="no">
 
 
@@ -451,6 +451,11 @@ ngx_mail_proxy_module</link>
 <listitem>
 <link doc="mail/ngx_mail_realip_module.xml">
 ngx_mail_realip_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_limit_conn_module.xml">
+ngx_mail_limit_conn_module</link>
 </listitem>
 
 <listitem>

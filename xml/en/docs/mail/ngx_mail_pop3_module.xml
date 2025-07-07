@@ -78,7 +78,7 @@ will not be automatically included in <link id="pop3_capabilities"/>.
 
 <directive name="pop3_capabilities">
 <syntax><value>extension</value> ...</syntax>
-<default>TOP USER UIDL</default>
+<default>TOP USER UIDL RESP-CODES</default>
 <context>mail</context>
 <context>server</context>
 
@@ -105,6 +105,13 @@ connection to the backend).
 <para>
 The current list of standardized extensions is published at
 <link url="http://www.iana.org/assignments/pop3-extension-mechanism">www.iana.org</link>.
+</para>
+
+<para>
+<note>
+Prior to version 1.29.0, the default value was
+<literal>TOP USER UIDL</literal>.
+</note>
 </para>
 
 </directive>

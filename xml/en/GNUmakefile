@@ -89,6 +89,7 @@ REFS =									\
 		mail/ngx_mail_auth_http_module				\
 		mail/ngx_mail_core_module				\
 		mail/ngx_mail_imap_module				\
+		mail/ngx_mail_limit_conn_module				\
 		mail/ngx_mail_pop3_module				\
 		mail/ngx_mail_proxy_module				\
 		mail/ngx_mail_realip_module				\

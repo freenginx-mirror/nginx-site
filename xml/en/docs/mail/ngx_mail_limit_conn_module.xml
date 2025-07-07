@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Maxim Dounin
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_mail_limit_conn_module"
+        link="/en/docs/mail/ngx_mail_limit_conn_module.html"
+        lang="en"
+        rev="1">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_mail_limit_conn_module</literal> module (1.29.0)
+is used to limit the number of connections per the defined key,
+in particular, the number of connections from an authenticated client.
+</para>
+
+<para>
+Connections are limited after
+<link url="ngx_mail_auth_http_module.xml">authentication</link>,
+so the user name updated by the authentication server can be used as a key,
+as well as arbitrary authentication server response header fields.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+mail {
+    limit_conn_zone $remote_user zone=user:10m;
+
+    ...
+
+    server {
+
+        ...
+
+        limit_conn user 10;
+    }
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="limit_conn">
+<syntax><value>zone</value> <value>number</value></syntax>
+<default/>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Sets the shared memory zone
+and the maximum allowed number of connections for a given key value.
+When this limit is exceeded, the server will return a protocol-specific
+error and close the connection.
+For example, the directives
+<example>
+limit_conn_zone $remote_user zone=user:10m;
+
+server {
+    limit_conn user 5;
+</example>
+allow only at most 5 connections for an authenticated user at a time.
+</para>
+
+<para>
+Note that not all email clients support the response codes being used,
+and might show password prompt to the user.
+Therefore, it is not recommended to configure limits which are low enough
+to be exceeded by well-behaving clients.
+</para>
+
+<para>
+There could be several <literal>limit_conn</literal> directives.
+For example, the following configuration will limit the number
+of connections per user, and, at the same time, number of connections
+for all users in the particular domain, as provided by the authentication
+server:
+<example>
+limit_conn_zone $remote_user zone=user:10m;
+limit_conn_zone $auth_http_domain zone=domain:10m;
+
+server {
+    ...
+    limit_conn user 5;
+    limit_conn domain 100;
+}
+</example>
+</para>
+
+<para>
+These directives are inherited from the previous configuration level
+if and only if there are no <literal>limit_conn</literal> directives
+defined on the current level.
+</para>
+
+</directive>
+
+
+<directive name="limit_conn_dry_run">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Enables the dry run mode.
+In this mode, the number of connections is not limited, however,
+in the shared memory zone, the number of excessive connections is accounted
+as usual.
+</para>
+
+</directive>
+
+
+<directive name="limit_conn_log_level">
+<syntax>
+<literal>info</literal> |
+<literal>notice</literal> |
+<literal>warn</literal> |
+<literal>error</literal></syntax>
+<default>error</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Sets the desired logging level for cases when the server
+limits the number of connections.
+</para>
+
+</directive>
+
+
+<directive name="limit_conn_zone">
+<syntax>
+    <value>key</value>
+    <literal>zone</literal>=<value>name</value>:<value>size</value></syntax>
+<default/>
+<context>mail</context>
+
+<para>
+Sets parameters for a shared memory zone
+that will keep states for various keys.
+In particular, the state includes the current number of connections.
+</para>
+
+<para>
+The <value>key</value> can be one of the following:
+
+<list type="tag">
+
+<tag-name><var>$remote_addr</var></tag-name>
+<tag-desc>
+client address
+</tag-desc>
+
+<tag-name><var>$remote_user</var></tag-name>
+<tag-desc>
+user name supplied during authentication
+</tag-desc>
+
+<tag-name><var>$auth_http_</var><value>name</value></tag-name>
+<tag-desc>
+arbitrary authentication server response header field;
+the last part of a variable name is the field name converted
+to lower case with dashes replaced by underscores
+</tag-desc>
+
+</list>
+
+Connections with an empty key value are not accounted.
+</para>
+
+<para>
+Usage example:
+<example>
+limit_conn_zone $remote_user zone=addr:10m;
+</example>
+Here, the user name serves as a key.
+</para>
+
+<para>
+On 32-bit platforms a stored state occupies
+32 bytes for keys up to 12 bytes,
+64 bytes for keys from 13 to 44 bytes.
+On 64-bit platforms a stored state occupies
+64 bytes for keys up to 28 bytes.
+One megabyte zone can keep about 32 thousand 32-byte states
+or about 16 thousand 64-byte states.
+If the zone storage is exhausted,
+the server will return an error and close the connection.
+</para>
+
+</directive>
+
+</section>
+
+</module>
