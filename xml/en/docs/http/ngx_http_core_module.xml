@@ -10,7 +10,7 @@
 <module name="Module ngx_http_core_module"
         link="/en/docs/http/ngx_http_core_module.html"
         lang="en"
-        rev="109">
+        rev="110">
 
 <section id="directives" name="Directives">
 
@@ -1093,12 +1093,9 @@ Please note that this will limit access to all methods
 <context>if in location</context>
 
 <para>
-Limits the rate of response transmission to a client.
+Limits the rate of response transmission to the client.
 The <value>rate</value> is specified in bytes per second.
 The zero value disables rate limiting.
-<!--
-The smaller the rate, the more accurate will be the limitation.
--->
 The limit is set per a request, and so if a client simultaneously opens
 two connections, the overall rate will be twice as much
 as the specified limit.
@@ -1159,8 +1156,9 @@ directives.
 <appeared-in>0.8.0</appeared-in>
 
 <para>
-Sets the initial amount after which the further transmission
-of a response to a client will be rate limited.
+Specifies the allowed size of data bursts
+after which the further transmission of a response to the client
+will be rate limited.
 Parameter value can contain variables (1.17.0).
 </para>
 
@@ -1173,6 +1171,15 @@ location /flv/ {
     limit_rate       50k;
 }
 </example>
+</para>
+
+<para>
+<note>
+Prior to version 1.29.0,
+this directive controlled the initial amount of data
+sent without rate limiting
+rather than the size of bursts.
+</note>
 </para>
 
 </directive>
