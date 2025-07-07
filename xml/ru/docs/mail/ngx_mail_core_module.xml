@@ -10,7 +10,7 @@
 <module name="Модуль ngx_mail_core_module"
         link="/ru/docs/mail/ngx_mail_core_module.html"
         lang="ru"
-        rev="25">
+        rev="26">
 
 <section id="summary">
 
@@ -112,6 +112,74 @@ limit_rate_after 100m;
 Задаёт допустимый размер всплесков при передаче данных,
 при превышении которого начинает ограничиваться скорость
 передачи данных клиенту.
+</para>
+
+</directive>
+
+
+<directive name="lingering_close">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>mail</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.29.0</appeared-in>
+
+<para>
+Управляет закрытием соединений с клиентами
+в случае ошибок, в частности
+<link doc="ngx_mail_auth_http_module.xml">ошибок аутентификации</link>.
+</para>
+
+<para>
+Со значением по умолчанию “<literal>on</literal>” nginx будет
+<link id="lingering_timeout">ждать</link> и
+<link id="lingering_time">обрабатывать</link> дополнительные данные,
+поступающие от клиента, перед полным закрытием соединения.
+</para>
+
+<para>
+Со значением “<literal>off</literal>” nginx не будет ждать поступления
+дополнительных данных и сразу же закроет соединение.
+</para>
+
+</directive>
+
+
+<directive name="lingering_time">
+<syntax><value>время</value></syntax>
+<default>30s</default>
+<context>mail</context>
+<context>server</context>
+<appeared-in>1.29.0</appeared-in>
+
+<para>
+Если действует <link id="lingering_close"/>,
+эта директива задаёт максимальное время, в течение которого nginx
+будет обрабатывать (читать и игнорировать) дополнительные данные,
+поступающие от клиента.
+По прошествии этого времени соединение будет закрыто, даже если
+будут ещё данные.
+</para>
+
+</directive>
+
+
+<directive name="lingering_timeout">
+<syntax><value>время</value></syntax>
+<default>5s</default>
+<context>mail</context>
+<context>server</context>
+<appeared-in>1.29.0</appeared-in>
+
+<para>
+Если действует <link id="lingering_close"/>, эта директива задаёт
+максимальное время ожидания поступления дополнительных данных от клиента.
+Если в течение этого времени данные не были получены, соединение закрывается.
+В противном случае данные читаются и игнорируются, и nginx снова
+ждёт поступления данных.
+Цикл “ждать-читать-игнорировать” повторяется, но не дольше чем задано
+директивой <link id="lingering_time"/>.
 </para>
 
 </directive>

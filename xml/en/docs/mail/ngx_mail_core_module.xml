@@ -10,7 +10,7 @@
 <module name="Module ngx_mail_core_module"
         link="/en/docs/mail/ngx_mail_core_module.html"
         lang="en"
-        rev="25">
+        rev="26">
 
 <section id="summary">
 
@@ -111,6 +111,72 @@ limit_rate_after 100m;
 <para>
 Specifies the allowed size of data bursts
 after which further transmission to the client will be rate limited.
+</para>
+
+</directive>
+
+
+<directive name="lingering_close">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>mail</context>
+<context>server</context>
+<appeared-in>1.29.0</appeared-in>
+
+<para>
+Controls how nginx closes client connections
+in case of errors, notably
+<link doc="ngx_mail_auth_http_module.xml">authentication errors</link>.
+</para>
+
+<para>
+The default value “<literal>on</literal>” instructs nginx to
+<link id="lingering_timeout">wait for</link> and
+<link id="lingering_time">process</link> additional data from the client
+before fully closing the connection.
+</para>
+
+<para>
+The value “<literal>off</literal>” tells nginx to do not wait for
+more data and close the connection immediately.
+</para>
+
+</directive>
+
+
+<directive name="lingering_time">
+<syntax><value>time</value></syntax>
+<default>30s</default>
+<context>mail</context>
+<context>server</context>
+<appeared-in>1.29.0</appeared-in>
+
+<para>
+When <link id="lingering_close"/> is in effect,
+this directive specifies the maximum time during which nginx
+will process (read and ignore) additional data coming from the client.
+After that, the connection will be closed, even if there will be
+more data.
+</para>
+
+</directive>
+
+
+<directive name="lingering_timeout">
+<syntax><value>time</value></syntax>
+<default>5s</default>
+<context>mail</context>
+<context>server</context>
+<appeared-in>1.29.0</appeared-in>
+
+<para>
+When <link id="lingering_close"/> is in effect, this directive specifies
+the maximum waiting time for more client data to arrive.
+If data are not received during this time, the connection is closed.
+Otherwise, the data are read and ignored, and nginx starts waiting
+for more data again.
+The “wait-read-ignore” cycle is repeated, but no longer than specified by the
+<link id="lingering_time"/> directive.
 </para>
 
 </directive>
