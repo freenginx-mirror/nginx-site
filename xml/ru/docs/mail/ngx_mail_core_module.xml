@@ -10,7 +10,7 @@
 <module name="Модуль ngx_mail_core_module"
         link="/ru/docs/mail/ngx_mail_core_module.html"
         lang="ru"
-        rev="24">
+        rev="25">
 
 <section id="summary">
 
@@ -73,6 +73,49 @@ mail {
 
 
 <section id="directives" name="Директивы">
+
+<directive name="limit_rate">
+<syntax><value>скорость</value></syntax>
+<default>0</default>
+<context>mail</context>
+<context>server</context>
+<appeared-in>1.29.0</appeared-in>
+
+<para>
+Ограничивает скорость передачи данных клиенту.
+<value>Скорость</value> задаётся в байтах в секунду.
+Значение 0 отключает ограничение скорости.
+Ограничение устанавливается на соединение, поэтому, если клиент одновременно
+откроет два соединения, суммарная скорость будет вдвое выше
+заданного ограничения.
+</para>
+
+<para>
+Пример:
+<example>
+limit_rate       10m;
+limit_rate_after 100m;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="limit_rate_after">
+<syntax><value>размер</value></syntax>
+<default>0</default>
+<context>mail</context>
+<context>server</context>
+<appeared-in>1.29.0</appeared-in>
+
+<para>
+Задаёт допустимый размер всплесков при передаче данных,
+при превышении которого начинает ограничиваться скорость
+передачи данных клиенту.
+</para>
+
+</directive>
+
 
 <directive name="listen">
 <syntax>
