@@ -30,7 +30,7 @@
 
 <xsl:template match="module">
     <xsl:variable select="@name" name="module"/>
-    <xsl:for-each select="document(@name)//tag-name/var">
+    <xsl:for-each select="document(@name)//tag-name[@id]/var">
         <link doc="{$module}" id="{../@id}"><xsl:apply-templates/></link>
     </xsl:for-each>
 </xsl:template>
