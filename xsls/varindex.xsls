@@ -32,7 +32,7 @@ X:template = "modules" {
 
 X:template = "module" {
     X:var module="@name"
-    X:for-each "document(@name)//tag-name/var" {
+    X:for-each "document(@name)//tag-name[@id]/var" {
         <link doc="{$module}" id="{../@id}">!!;</link>
     }
 }
