@@ -8,6 +8,22 @@
 
 <news name="freenginx news" link="/" lang="en">
 
+<event date="2025-07-08">
+<para>
+<link doc="en/download.xml">freenginx-1.29.0</link>
+mainline version has been released,
+featuring
+improved handling of network memory pressure conditions on Linux,
+<link doc="en/docs/http/ngx_http_core_module.xml" id="directio"/>
+support in cache,
+<link doc="en/docs/mail/ngx_mail_core_module.xml" id="limit_rate"/>
+and
+<link doc="en/docs/mail/ngx_mail_limit_conn_module.xml">connection
+limiting</link> in the mail proxy module,
+and more.
+</para>
+</event>
+
 <event date="2025-04-22">
 <para>
 <link doc="en/download.xml">freenginx-1.28.0</link>

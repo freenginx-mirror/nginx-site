@@ -1,4 +1,42 @@
 
+Changes with freenginx 1.29.0                                    08 Jul 2025
+
+    *) Change: the "directio" directive now works when returning responses
+       from cache.
+
+    *) Change: the "limit_rate" directive now uses the leaky bucket
+       algorithm, allowing more accurate enforcement of the specified rate;
+       the "limit_rate_after" directive specifies the allowed size of
+       traffic bursts.
+
+    *) Change: the $request_time variable now remains correct on system time
+       changes.
+
+    *) Feature: the "send_min_rate" and "client_body_min_rate" directives.
+
+    *) Feature: the "limit_rate" and "limit_rate_after" directives in the
+       mail proxy module.
+
+    *) Feature: the "lingering_close", "lingering_time", and
+       "lingering_timeout" directives in the mail proxy module.
+
+    *) Feature: connection limiting in the mail proxy module.
+
+    *) Workaround: the "send_timeout" directive might not work when the
+       kernel TCP memory limit was reached on Linux.
+
+    *) Workaround: gcc 15.1 compatibility.
+
+    *) Bugfix: a segmentation fault might occur in a worker process if the
+       "proxy_ssl_password_file" directive was used in the stream module;
+       the bug had appeared in 1.23.1.
+
+    *) Bugfix: a segmentation fault might occur in a worker process on
+       shutdown; the bug had appeared in 1.27.2.
+
+    *) Bugfix: in the "open_file_cache" directive.
+
+
 Changes with freenginx 1.27.6                                    15 Apr 2025
 
     *) Workaround: the X25519MLKEM768 group name was not shown in the
