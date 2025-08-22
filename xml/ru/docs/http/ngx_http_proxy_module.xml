@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_proxy_module"
         link="/ru/docs/http/ngx_http_proxy_module.html"
         lang="ru"
-        rev="79">
+        rev="80">
 
 <section id="summary">
 
@@ -38,6 +38,21 @@ location / {
 
 
 <section id="directives" name="Директивы">
+
+<directive name="proxy_allow_http09">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.29.1</appeared-in>
+
+<para>
+Разрешает обработку ответов, использующих протокол HTTP/0.9.
+По умолчанию такие ответы отвергаются начиная с версии 1.29.1.
+</para>
+
+</directive>
 
 <directive name="proxy_bind">
 <syntax>
