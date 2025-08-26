@@ -1,4 +1,31 @@
 
+Changes with freenginx 1.29.1                                    26 Aug 2025
+
+    *) Change: now responses from proxied servers over HTTP/0.9 are rejected
+       as invalid by default; the "proxy_allow_http09" directive allows
+       processing of such responses.
+
+    *) Change: stricter syntax checks are now applied to the "Host" request
+       header line.
+
+    *) Feature: now interim 1xx responses of proxied servers are ignored.
+
+    *) Feature: certificates for IP addresses are now supported when
+       verifying backend SSL certificates.
+
+    *) Feature: the "proxy_allow_duplicate_chunked" directive.
+       Thanks to Gennady Bekasov.
+
+    *) Bugfix: when using a host name in the request line, the "_" and some
+       other characters were not allowed, as well as zone identifiers in
+       IPv6 addresses.
+
+    *) Workaround: "shutdown() failed (22: Invalid argument)" alerts might
+       appear in logs on NetBSD.
+
+    *) Bugfix: in the mail proxy module.
+
+
 Changes with freenginx 1.29.0                                    08 Jul 2025
 
     *) Change: the "directio" directive now works when returning responses

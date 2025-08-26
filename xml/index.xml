@@ -8,6 +8,17 @@
 
 <news name="freenginx news" link="/" lang="en">
 
+<event date="2025-08-26">
+<para>
+<link doc="en/download.xml">freenginx-1.29.1</link>
+mainline version has been released,
+featuring
+improved handling of interim 1xx responses during proxying,
+support for IP address certificates of proxied servers,
+and more.
+</para>
+</event>
+
 <event date="2025-07-08">
 <para>
 <link doc="en/download.xml">freenginx-1.29.0</link>
