@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_ssl_module"
         link="/ru/docs/http/ngx_http_ssl_module.html"
         lang="ru"
-        rev="64">
+        rev="65">
 
 <section id="summary">
 
@@ -446,6 +446,86 @@ ssl_ecdh_curve prime256v1:secp384r1;
 Поэтому для работы ECDSA-сертификатов
 важно, чтобы список включал кривые, используемые в сертификатах.
 </note>
+</para>
+
+</directive>
+
+
+<directive name="ssl_encrypted_hello_key">
+<syntax><value>файл</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<appeared-in>1.29.2</appeared-in>
+
+<para>
+Задаёт <value>файл</value> с секретным ключом и конфигурацией
+для расширения
+<link url="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni">Encrypted
+Client Hello (ECH)</link> протокола TLS.
+Переменная <link id="var_ssl_encrypted_hello">$ssl_encrypted_hello</link>
+показывает, использовалось ли расширение при установлении соединения.
+</para>
+
+<para>
+Если указано несколько ключей,
+то все ключи будут использоваться для расшифровки,
+и только конфигурация, соответствующая первому ключу,
+будет передаваться клиентам для повторных попыток соединения.
+Это позволяет настроить ротацию ключей, например:
+<example>
+ssl_encrypted_hello_key current.ech;
+ssl_encrypted_hello_key previous.ech;
+</example>
+</para>
+
+<para>
+<value>Файл</value> должен содержать секретный ключ и конфигурацию в
+<link url="https://datatracker.ietf.org/doc/html/draft-farrell-tls-pemesni"
+>формате PEM</link>
+и, при использовании
+<link url="https://github.com/openssl/openssl/tree/feature/ech">OpenSSL
+ECH feature branch</link>,
+может быть создан следующей командой:
+<example>
+openssl ech -public_name public.example.com -out example.ech
+</example>
+Также
+можно использовать “<command>bssl generate-ech</command>” из BoringSSL,
+но потребуется конвертация, например:
+<example>
+bssl generate-ech \
+    -out-ech-config example.echconfig.bin \
+    -out-ech-config-list example.echconfiglist.bin \
+    -out-private-key example.echkey.bin \
+    -config-id 0 \
+    -public-name public.example.com
+(echo "-----BEGIN PRIVATE KEY-----";
+    (printf "\060\056\002\001\000\060\005\006\003\053\145\156\004\042\004\040";
+        cat example.echkey.bin) | openssl base64;
+    echo "-----END PRIVATE KEY-----";
+    echo "-----BEGIN ECHCONFIG-----";
+    cat example.echconfiglist.bin | openssl base64;
+    echo "-----END ECHCONFIG-----") > example.ech
+</example>
+</para>
+
+<para>
+Расшифровка происходит до того, как
+имя сервера, запрошенное клиентом, становится известно,
+поэтому, если директива используется
+на уровне <link doc="ngx_http_core_module.xml" id="server"/>,
+ключи необходимо указывать для сервера по умолчанию.
+Подробнее см. в разделе
+“<link doc="server_names.xml" id="virtual_server_selection">Выбор
+виртуального сервера</link>”.
+</para>
+
+<para>
+Директива поддерживается при использовании
+<link url="https://github.com/openssl/openssl/tree/feature/ech">OpenSSL
+ECH feature branch</link> или
+<link url="https://boringssl.googlesource.com/boringssl/">BoringSSL</link>.
 </para>
 
 </directive>
@@ -1181,6 +1261,14 @@ prime256v1
 возвращает “<literal>1</literal>”, если
 используется TLS 1.3 <link id="ssl_early_data">early data</link>
 и операция handshake не завершена, иначе “” (1.15.3).
+</tag-desc>
+
+<tag-name id="var_ssl_encrypted_hello"><var>$ssl_encrypted_hello</var></tag-name>
+<tag-desc>
+возвращает “<literal>1</literal>”, если
+при установлении соединения использовалось расширение
+<link id="ssl_encrypted_hello_key">Encrypted Client Hello (ECH)</link>
+протокола TLS, иначе “” (1.29.2).
 </tag-desc>
 
 <tag-name id="var_ssl_protocol"><var>$ssl_protocol</var></tag-name>
