@@ -10,7 +10,7 @@
 <module name="Module ngx_http_ssl_module"
         link="/en/docs/http/ngx_http_ssl_module.html"
         lang="en"
-        rev="65">
+        rev="66">
 
 <section id="summary">
 
@@ -199,6 +199,14 @@ such as writing secret key data to
 </para>
 
 <para>
+The value
+<literal>store</literal>:<value>uri</value>
+can be specified instead of the <value>file</value> (1.29.3),
+which loads a certificate with a specified <value>uri</value>
+from an OpenSSL store.
+</para>
+
+<para>
 It should be kept in mind that due to the HTTPS protocol limitations
 for maximum interoperability virtual servers should listen on
 <link doc="configuring_https_servers.xml" id="name_based_https_servers">different
@@ -225,6 +233,14 @@ The value
 can be specified instead of the <value>file</value> (1.7.9),
 which loads a secret key with a specified <value>id</value>
 from the OpenSSL engine <value>name</value>.
+</para>
+
+<para>
+The value
+<literal>store</literal>:<value>uri</value>
+can be specified instead of the <value>file</value> (1.29.3),
+which loads a secret key with a specified <value>uri</value>
+from an OpenSSL store.
 </para>
 
 <para id="ssl_certificate_key_data">

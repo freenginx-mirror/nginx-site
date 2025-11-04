@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_ssl_module"
         link="/ru/docs/http/ngx_http_ssl_module.html"
         lang="ru"
-        rev="65">
+        rev="66">
 
 <section id="summary">
 
@@ -201,6 +201,13 @@ ssl_certificate_key $ssl_server_name.key;
 </para>
 
 <para>
+Вместо <value>файла</value> можно указать значение
+<literal>store</literal>:<value>uri</value> (1.29.3),
+которое загружает сертификат с указанным <value>uri</value>
+из OpenSSL store.
+</para>
+
+<para>
 Нужно иметь в виду, что из-за ограничения протокола HTTPS
 для максимальной совместимости виртуальные серверы должны слушать на
 <link doc="configuring_https_servers.xml" id="name_based_https_servers">разных
@@ -226,6 +233,13 @@ IP-адресах</link>.
 <literal>engine</literal>:<value>имя</value>:<value>id</value> (1.7.9),
 которое загружает ключ с указанным <value>id</value>
 из OpenSSL engine с заданным <value>именем</value>.
+</para>
+
+<para>
+Вместо <value>файла</value> можно указать значение
+<literal>store</literal>:<value>uri</value> (1.29.3),
+которое загружает ключ с указанным <value>uri</value>
+из OpenSSL store.
 </para>
 
 <para id="ssl_certificate_key_data">

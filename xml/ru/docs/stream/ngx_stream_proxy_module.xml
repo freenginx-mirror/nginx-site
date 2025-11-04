@@ -9,7 +9,7 @@
 <module name="Модуль ngx_stream_proxy_module"
         link="/ru/docs/stream/ngx_stream_proxy_module.html"
         lang="ru"
-        rev="33">
+        rev="34">
 
 <section id="summary">
 
@@ -371,6 +371,13 @@ Cессия завершится после отправки всех приня
 </para>
 
 <para>
+Вместо <value>файла</value> можно указать значение
+<literal>store</literal>:<value>uri</value> (1.29.3),
+которое загружает сертификат с указанным <value>uri</value>
+из OpenSSL store.
+</para>
+
+<para>
 Начиная с версии 1.21.0 в имени файла можно использовать переменные.
 </para>
 
@@ -386,6 +393,13 @@ Cессия завершится после отправки всех приня
 <para>
 Задаёт <value>файл</value> с секретным ключом в формате PEM
 для аутентификации на проксируемом сервере.
+</para>
+
+<para>
+Вместо <value>файла</value> можно указать значение
+<literal>store</literal>:<value>uri</value> (1.29.3),
+которое загружает ключ с указанным <value>uri</value>
+из OpenSSL store.
 </para>
 
 <para>

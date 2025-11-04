@@ -9,7 +9,7 @@
 <module name="Модуль ngx_stream_ssl_module"
         link="/ru/docs/stream/ngx_stream_ssl_module.html"
         lang="ru"
-        rev="33">
+        rev="34">
 
 <section id="summary">
 
@@ -171,6 +171,13 @@ ssl_certificate_key $ssl_server_name.key;
 <link doc="../ngx_core_module.xml" id="error_log">лог ошибок</link>.
 </para>
 
+<para>
+Вместо <value>файла</value> можно указать значение
+<literal>store</literal>:<value>uri</value> (1.29.3),
+которое загружает сертификат с указанным <value>uri</value>
+из OpenSSL store.
+</para>
+
 </directive>
 
 
@@ -190,6 +197,13 @@ ssl_certificate_key $ssl_server_name.key;
 <literal>engine</literal>:<value>имя</value>:<value>id</value>,
 которое загружает ключ с указанным <value>id</value>
 из OpenSSL engine с заданным <value>именем</value>.
+</para>
+
+<para>
+Вместо <value>файла</value> можно указать значение
+<literal>store</literal>:<value>uri</value> (1.29.3),
+которое загружает ключ с указанным <value>uri</value>
+из OpenSSL store.
 </para>
 
 <para id="ssl_certificate_key_data">
