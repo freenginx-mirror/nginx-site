@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_xslt_module"
         link="/ru/docs/http/ngx_http_xslt_module.html"
         lang="ru"
-        rev="3">
+        rev="4">
 
 <section id="summary">
 
@@ -68,6 +68,36 @@ location / {
 <example>
 &lt;!ENTITY nbsp "&amp;#xa0;"&gt;
 </example>
+</para>
+
+</directive>
+
+
+<directive name="xml_external_entities">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.29.3</appeared-in>
+
+<para>
+Разрешает загрузку внешних символьных сущностей,
+объявленных во внутреннем подмножестве DTD,
+то есть непосредственно в обрабатываемом XML-документе.
+</para>
+
+<para>
+По умолчанию загрузка внешних сущностей,
+объявленных во внутреннем подмножестве DTD,
+запрещена начиная с версии 1.29.3.
+Загрузка может быть разрешена с помощью данной директивы,
+но следует учитывать, что это делает возможным
+чтение любых локальных файлов, доступных рабочему процессу.
+</para>
+
+<para>
+Поддерживается только загрузка внешних сущностей из файлов.
 </para>
 
 </directive>
