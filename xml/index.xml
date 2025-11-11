@@ -8,6 +8,22 @@
 
 <news name="freenginx news" link="/" lang="en">
 
+<event date="2025-11-11">
+<para>
+<link doc="en/download.xml">freenginx-1.29.3</link>
+mainline version has been released,
+featuring
+support for loading SSL certificates and secret keys from hardware tokens
+via OpenSSL stores using the
+“<link doc="en/docs/http/ngx_http_ssl_module.xml"
+id="ssl_certificate">store:...</link>” syntax
+and
+improvements to the
+<link doc="en/docs/http/ngx_http_xslt_module.xml"
+id="xml_external_entities">XSLT</link> module.
+</para>
+</event>
+
 <event date="2025-09-23">
 <para>
 <link doc="en/download.xml">freenginx-1.29.2</link>

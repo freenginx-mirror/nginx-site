@@ -1,4 +1,23 @@
 
+Changes with freenginx 1.29.3                                    11 Nov 2025
+
+    *) Feature: loading of certificates and secret keys from hardware tokens
+       with OpenSSL STORE API.
+
+    *) Change: loading of external character entities declared in the
+       internal DTD subset is now disabled by default in the
+       ngx_http_xslt_filter_module; loading can be enabled with the
+       "xml_external_entities" directive.
+
+    *) Bugfix: the ngx_http_xslt_filter_module might try loading of external
+       character entities over the network, which might cause blocking of
+       the worker process for a significant time.
+
+    *) Bugfix: the "working_directory", "google_perftools_profiles",
+       "geoip_country", "geoip_city", "geoip_org", and "xml_entities"
+       directives incorrectly handled relative paths.
+
+
 Changes with freenginx 1.29.2                                    23 Sep 2025
 
     *) Feature: support for the Encrypted Client Hello (ECH) extension of
