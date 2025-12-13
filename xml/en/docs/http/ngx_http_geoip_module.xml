@@ -10,7 +10,7 @@
 <module name="Module ngx_http_geoip_module"
         link="/en/docs/http/ngx_http_geoip_module.html"
         lang="en"
-        rev="5">
+        rev="6">
 
 <section id="summary">
 
@@ -21,7 +21,12 @@ with values depending on the client IP address, using the precompiled
 </para>
 
 <para>
-When using the databases with IPv6 support (1.3.12, 1.2.7),
+The module supports both legacy GeoIP databases
+and new GeoIP2 databases in the MaxMind DB (MMDB) file format (1.29.4).
+</para>
+
+<para>
+When using legacy databases with IPv6 support (1.3.12, 1.2.7),
 IPv4 addresses are looked up as IPv4-mapped IPv6 addresses.
 </para>
 
@@ -31,7 +36,14 @@ This module is not built by default, it should be enabled with the
 configuration parameter.
 <note>
 This module requires the
-<link url="http://www.maxmind.com/app/c">MaxMind GeoIP</link> library.
+<link url="https://github.com/maxmind/geoip-api-c">MaxMind GeoIP</link>
+library
+to support loading of legacy GeoIP databases,
+and the
+<link url="https://github.com/maxmind/libmaxminddb">libmaxminddb</link>
+library
+to support loading of GeoIP2 databases
+in the MaxMind DB (MMDB) file format (1.29.4).
 </note>
 </para>
 
@@ -79,6 +91,9 @@ two-letter country code, for example,
 <tag-desc>
 three-letter country code, for example,
 “<literal>RUS</literal>”, “<literal>USA</literal>”.
+<note>
+This variable is not available when using MMDB databases.
+</note>
 </tag-desc>
 
 <tag-name id="var_geoip_country_name"><var>$geoip_country_name</var></tag-name>
@@ -130,6 +145,9 @@ two-letter country code, for example,
 <tag-desc>
 three-letter country code, for example,
 “<literal>RUS</literal>”, “<literal>USA</literal>”.
+<note>
+This variable is not available when using MMDB databases.
+</note>
 </tag-desc>
 
 <tag-name id="var_geoip_city_country_name"><var>$geoip_city_country_name</var>
@@ -154,7 +172,7 @@ in Google AdWords API.
 
 <tag-name id="var_geoip_region"><var>$geoip_region</var></tag-name>
 <tag-desc>
-two-symbol country region code (region, territory, state, province, federal land
+country region code (region, territory, state, province, federal land
 and the like), for example,
 “<literal>48</literal>”, “<literal>DC</literal>”.
 </tag-desc>
@@ -237,6 +255,35 @@ address sent in <header>X-Forwarded-For</header> will be used.
 If recursive search is enabled then instead of the original client
 address that matches one of the trusted addresses, the last
 non-trusted address sent in <header>X-Forwarded-For</header> will be used.
+</para>
+
+</directive>
+
+
+<directive name="geoip_set">
+<syntax>
+    <value>$variable</value>
+    <value>file</value>
+    <value>path</value></syntax>
+<default/>
+<context>http</context>
+<appeared-in>1.29.4</appeared-in>
+
+<para>
+Creates a <value>variable</value>
+whose value is determinded
+from the specified database <value>file</value>
+with the specified data <value>path</value>,
+for example:
+<example>
+geoip_set $country GeoLite2-Country.mmdb country.names.en;
+geoip_set $region  GeoLite2-City.mmdb    subdivisions.0.iso_code;
+geoip_set $asn     GeoLite2-ASN.mmdb     autonomous_system_number;
+</example>
+</para>
+
+<para>
+This directive only supports MMDB databases.
 </para>
 
 </directive>

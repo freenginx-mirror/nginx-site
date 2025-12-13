@@ -9,7 +9,7 @@
 <module name="Модуль ngx_stream_geoip_module"
         link="/ru/docs/stream/ngx_stream_geoip_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -20,7 +20,12 @@
 </para>
 
 <para>
-При использовании баз данных с поддержкой IPv6
+Модуль поддерживает как базы данных GeoIP в старом формате,
+так и новые базы данных GeoIP2 в формате MaxMind DB (MMDB) (1.29.4).
+</para>
+
+<para>
+При использовании баз данных в старом формате с поддержкой IPv6
 IPv4-адреса ищутся отображёнными на IPv6.
 </para>
 
@@ -29,8 +34,12 @@ IPv4-адреса ищутся отображёнными на IPv6.
 разрешить с помощью конфигурационного параметра
 <literal>--with-stream_geoip_module</literal>.
 <note>
-Для сборки и работы этого модуля нужна библиотека
-<link url="http://www.maxmind.com/app/c">MaxMind GeoIP</link>.
+Для сборки и работы этого модуля требуются библиотеки:
+<link url="https://github.com/maxmind/geoip-api-c">MaxMind GeoIP</link>
+для работы с базами данных в старом формате
+и
+<link url="https://github.com/maxmind/libmaxminddb">libmaxminddb</link>
+для работы с базами данных в формате MaxMind DB (MMDB) (1.29.4).
 </note>
 </para>
 
@@ -51,7 +60,7 @@ stream {
         NA          na.example.com;
         AS          as.example.com;
     }
-   ...
+    ...
 }
 </example>
 </para>
@@ -83,6 +92,9 @@ stream {
 <tag-desc>
 трёхбуквенный код страны, например,
 “<literal>RUS</literal>”, “<literal>USA</literal>”.
+<note>
+Эта переменная недоступна при использовании баз данных в формате MMDB.
+</note>
 </tag-desc>
 
 <tag-name id="var_geoip_country_name"><var>$geoip_country_name</var></tag-name>
@@ -135,6 +147,9 @@ stream {
 <tag-desc>
 трёхбуквенный код страны, например,
 “<literal>RUS</literal>”, “<literal>USA</literal>”.
+<note>
+Эта переменная недоступна при использовании баз данных в формате MMDB.
+</note>
 </tag-desc>
 
 <tag-name id="var_geoip_city_country_name"><var>$geoip_city_country_name</var>
@@ -159,7 +174,7 @@ Google AdWords API.
 
 <tag-name id="var_geoip_region"><var>$geoip_region</var></tag-name>
 <tag-desc>
-двухсимвольный код региона страны (область, край, штат,
+код региона страны (область, край, штат,
 провинция, федеральная земля и тому подобное), например,
 “<literal>48</literal>”, “<literal>DC</literal>”.
 </tag-desc>
@@ -205,6 +220,35 @@ Google AdWords API.
 </tag-desc>
 
 </list>
+</para>
+
+</directive>
+
+
+<directive name="geoip_set">
+<syntax>
+    <value>$переменная</value>
+    <value>файл</value>
+    <value>путь</value></syntax>
+<default/>
+<context>http</context>
+<appeared-in>1.29.4</appeared-in>
+
+<para>
+Создаёт <value>переменную</value>,
+значение которой будет определяться
+из базы данных в <value>файле</value>
+по указанному <value>пути</value> к данным,
+например:
+<example>
+geoip_set $country GeoLite2-Country.mmdb country.names.en;
+geoip_set $region  GeoLite2-City.mmdb    subdivisions.0.iso_code;
+geoip_set $asn     GeoLite2-ASN.mmdb     autonomous_system_number;
+</example>
+</para>
+
+<para>
+Эта директива поддерживает только базы данных в формате MMDB.
 </para>
 
 </directive>

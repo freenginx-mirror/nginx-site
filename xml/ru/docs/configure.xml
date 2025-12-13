@@ -8,7 +8,7 @@
 <article name="Сборка nginx из исходных файлов"
          link="/ru/docs/configure.html"
          lang="ru"
-         rev="23">
+         rev="24">
 
 <section>
 
@@ -1312,6 +1312,26 @@ HTTP-сервера.
 </tag-name>
 <tag-desc>
 задаёт дополнительные параметры сборки OpenSSL.
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+<list type="tag">
+
+<tag-name>
+<literal>--without-geoip</literal>
+</tag-name>
+<tag-desc>
+запрещает использование библиотеки GeoIP (1.29.4).
+</tag-desc>
+
+<tag-name>
+<literal>--without-libmaxminddb</literal>
+</tag-name>
+<tag-desc>
+запрещает использование библиотеки libmaxminddb (1.29.4).
 </tag-desc>
 
 </list>

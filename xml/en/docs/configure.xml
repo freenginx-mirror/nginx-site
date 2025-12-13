@@ -8,7 +8,7 @@
 <article name="Building nginx from Sources"
          link="/en/docs/configure.html"
          lang="en"
-         rev="23">
+         rev="24">
 
 <section>
 
@@ -1332,6 +1332,26 @@ sets the path to the OpenSSL library sources.
 </tag-name>
 <tag-desc>
 sets additional build options for OpenSSL.
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+<list type="tag">
+
+<tag-name>
+<literal>--without-geoip</literal>
+</tag-name>
+<tag-desc>
+disables use of the GeoIP library (1.29.4).
+</tag-desc>
+
+<tag-name>
+<literal>--without-libmaxminddb</literal>
+</tag-name>
+<tag-desc>
+disables use of the libmaxminddb library (1.29.4).
 </tag-desc>
 
 </list>
