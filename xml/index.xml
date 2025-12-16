@@ -8,6 +8,20 @@
 
 <news name="freenginx news" link="/" lang="en">
 
+<event date="2025-12-16">
+<para>
+<link doc="en/download.xml">freenginx-1.29.4</link>
+mainline version has been released,
+featuring
+support for GeoIP2 databases in the MaxMind DB (MMDB) format
+in the
+<link doc="en/docs/http/ngx_http_geoip_module.xml">GeoIP module</link>
+and the
+<link doc="en/docs/http/ngx_http_geoip_module.xml" id="geoip_set"/>
+directive.
+</para>
+</event>
+
 <event date="2025-11-11">
 <para>
 <link doc="en/download.xml">freenginx-1.29.3</link>

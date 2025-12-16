@@ -1,4 +1,16 @@
 
+Changes with freenginx 1.29.4                                    16 Dec 2025
+
+    *) Feature: support for GeoIP2 databases in the MaxMind DB (MMDB) format
+       in the ngx_http_geoip_module and ngx_stream_geoip_module modules; the
+       "geoip_set" directive.
+
+    *) Bugfix: disk cache size might be calculated incorrectly on the XFS
+       file system with the "largeio" mount option.
+
+    *) Bugfix: of minor potential bugs.
+
+
 Changes with freenginx 1.29.3                                    11 Nov 2025
 
     *) Feature: loading of certificates and secret keys from hardware tokens
