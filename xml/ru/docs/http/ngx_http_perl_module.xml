@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_perl_module"
         link="/ru/docs/http/ngx_http_perl_module.html"
         lang="ru"
-        rev="8">
+        rev="9">
 
 <section id="summary">
 
@@ -220,14 +220,29 @@ __END__
 <para>
 <list type="tag">
 
+<tag-name><literal>$r->allow_ranges</literal></tag-name>
+<tag-desc>
+разрешает использовать диапазоны байт (byte ranges) при передаче ответа.
+</tag-desc>
+
 <tag-name><literal>$r->args</literal></tag-name>
 <tag-desc>
 возвращает аргументы запроса.
 </tag-desc>
 
+<tag-name><literal>$r->discard_request_body</literal></tag-name>
+<tag-desc>
+указывает nginx игнорировать тело запроса.
+</tag-desc>
+
 <tag-name><literal>$r->filename</literal></tag-name>
 <tag-desc>
 возвращает имя файла, соответствующее URI запроса.
+</tag-desc>
+
+<tag-name><literal>$r->flush</literal></tag-name>
+<tag-desc>
+немедленно передаёт данные клиенту.
 </tag-desc>
 
 <tag-name>
@@ -276,16 +291,6 @@ __END__
 </example>
 </tag-desc>
 
-<tag-name><literal>$r->allow_ranges</literal></tag-name>
-<tag-desc>
-разрешает использовать диапазоны байт (byte ranges) при передаче ответа.
-</tag-desc>
-
-<tag-name><literal>$r->discard_request_body</literal></tag-name>
-<tag-desc>
-указывает nginx игнорировать тело запроса.
-</tag-desc>
-
 <tag-name><literal>$r->header_in(<value>поле</value>)</literal></tag-name>
 <tag-desc>
 возвращает значение заданного поля в заголовке запроса клиента.
@@ -331,6 +336,11 @@ __END__
 метод передаёт клиенту данные.
 </tag-desc>
 
+<tag-name><literal>$r->remote_addr</literal></tag-name>
+<tag-desc>
+возвращает IP-адрес клиента.
+</tag-desc>
+
 <tag-name><literal>$r->request_body</literal></tag-name>
 <tag-desc>
 возвращает тело запроса клиента при условии,
@@ -356,14 +366,15 @@ __END__
 возвращает HTTP-метод запроса клиента.
 </tag-desc>
 
-<tag-name><literal>$r->remote_addr</literal></tag-name>
+<tag-name>
+    <literal>$r->send_http_header([<value>тип</value>])</literal>
+</tag-name>
 <tag-desc>
-возвращает IP-адрес клиента.
-</tag-desc>
-
-<tag-name><literal>$r->flush</literal></tag-name>
-<tag-desc>
-немедленно передаёт данные клиенту.
+передаёт клиенту заголовок ответа.
+Необязательный параметр <value>тип</value> устанавливает значение поля
+<header>Content-Type</header> в заголовке ответа.
+Пустая строка в качестве типа запрещает передачу поля
+<header>Content-Type</header>.
 </tag-desc>
 
 <tag-name>
@@ -377,22 +388,6 @@ __END__
 задают начальное смещение и длину передаваемых данных.
 Непосредственно передача данных происходит уже после завершения
 обработчика Perl.
-</tag-desc>
-
-<tag-name>
-    <literal>$r->send_http_header([<value>тип</value>])</literal>
-</tag-name>
-<tag-desc>
-передаёт клиенту заголовок ответа.
-Необязательный параметр <value>тип</value> устанавливает значение поля
-<header>Content-Type</header> в заголовке ответа.
-Пустая строка в качестве типа запрещает передачу поля
-<header>Content-Type</header>.
-</tag-desc>
-
-<tag-name><literal>$r->status(<value>код</value>)</literal></tag-name>
-<tag-desc>
-устанавливает код ответа.
 </tag-desc>
 
 <tag-name>
@@ -436,6 +431,11 @@ sub <emphasis>next</emphasis> {
 
 __END__
 </example>
+</tag-desc>
+
+<tag-name><literal>$r->status(<value>код</value>)</literal></tag-name>
+<tag-desc>
+устанавливает код ответа.
 </tag-desc>
 
 <tag-name><literal>$r->unescape(<value>текст</value>)</literal></tag-name>

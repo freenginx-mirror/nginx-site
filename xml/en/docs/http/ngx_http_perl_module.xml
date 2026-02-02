@@ -10,7 +10,7 @@
 <module name="Module ngx_http_perl_module"
         link="/en/docs/http/ngx_http_perl_module.html"
         lang="en"
-        rev="8">
+        rev="9">
 
 <section id="summary">
 
@@ -219,14 +219,29 @@ An SSI command calling Perl has the following format:
 <para>
 <list type="tag">
 
+<tag-name><literal>$r->allow_ranges</literal></tag-name>
+<tag-desc>
+enables the use of byte ranges when sending responses.
+</tag-desc>
+
 <tag-name><literal>$r->args</literal></tag-name>
 <tag-desc>
 returns request arguments.
 </tag-desc>
 
+<tag-name><literal>$r->discard_request_body</literal></tag-name>
+<tag-desc>
+instructs nginx to discard the request body.
+</tag-desc>
+
 <tag-name><literal>$r->filename</literal></tag-name>
 <tag-desc>
 returns a filename corresponding to the request URI.
+</tag-desc>
+
+<tag-name><literal>$r->flush</literal></tag-name>
+<tag-desc>
+immediately sends data to the client.
 </tag-desc>
 
 <tag-name>
@@ -275,16 +290,6 @@ __END__
 </example>
 </tag-desc>
 
-<tag-name><literal>$r->allow_ranges</literal></tag-name>
-<tag-desc>
-enables the use of byte ranges when sending responses.
-</tag-desc>
-
-<tag-name><literal>$r->discard_request_body</literal></tag-name>
-<tag-desc>
-instructs nginx to discard the request body.
-</tag-desc>
-
 <tag-name><literal>$r->header_in(<value>field</value>)</literal></tag-name>
 <tag-desc>
 returns the value of the specified client request header field.
@@ -331,6 +336,11 @@ will be appended to the message.
 passes data to a client.
 </tag-desc>
 
+<tag-name><literal>$r->remote_addr</literal></tag-name>
+<tag-desc>
+returns the client IP address.
+</tag-desc>
+
 <tag-name><literal>$r->request_body</literal></tag-name>
 <tag-desc>
 returns the client request body if it has not been
@@ -356,14 +366,15 @@ should be enabled.
 returns the client request HTTP method.
 </tag-desc>
 
-<tag-name><literal>$r->remote_addr</literal></tag-name>
+<tag-name>
+    <literal>$r->send_http_header([<value>type</value>])</literal>
+</tag-name>
 <tag-desc>
-returns the client IP address.
-</tag-desc>
-
-<tag-name><literal>$r->flush</literal></tag-name>
-<tag-desc>
-immediately sends data to the client.
+sends the response header to the client.
+The optional <value>type</value> parameter sets the value of
+the <header>Content-Type</header> response header field.
+If the value is an empty string, the <header>Content-Type</header>
+header field will not be sent.
 </tag-desc>
 
 <tag-name>
@@ -377,22 +388,6 @@ Optional parameters
 specify the initial offset and length of the data to be transmitted.
 The actual data transmission happens after the Perl handler
 has completed.
-</tag-desc>
-
-<tag-name>
-    <literal>$r->send_http_header([<value>type</value>])</literal>
-</tag-name>
-<tag-desc>
-sends the response header to the client.
-The optional <value>type</value> parameter sets the value of
-the <header>Content-Type</header> response header field.
-If the value is an empty string, the <header>Content-Type</header>
-header field will not be sent.
-</tag-desc>
-
-<tag-name><literal>$r->status(<value>code</value>)</literal></tag-name>
-<tag-desc>
-sets a response code.
 </tag-desc>
 
 <tag-name>
@@ -436,6 +431,11 @@ sub <emphasis>next</emphasis> {
 
 __END__
 </example>
+</tag-desc>
+
+<tag-name><literal>$r->status(<value>code</value>)</literal></tag-name>
+<tag-desc>
+sets a response code.
 </tag-desc>
 
 <tag-name><literal>$r->unescape(<value>text</value>)</literal></tag-name>
