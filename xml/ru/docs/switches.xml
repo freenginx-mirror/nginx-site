@@ -8,7 +8,7 @@
 <article name="Параметры командной строки nginx"
          link="/ru/docs/switches.html"
          lang="ru"
-         rev="4">
+         rev="5">
 
 <section>
 
@@ -67,7 +67,7 @@ nginx -g "pid /var/run/nginx.pid; worker_processes `sysctl -n hw.ncpu`;"
 <listitem>
 <literal>reload</literal>&mdash;перезагрузка конфигурации,
 старт нового рабочего процесса с новой конфигурацией,
-плавное завершение старых рабочих процессов.
+плавное завершение старых рабочих процессов
 </listitem>
 <listitem>
 <literal>reopen</literal>&mdash;переоткрытие лог-файлов

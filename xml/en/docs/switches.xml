@@ -8,7 +8,7 @@
 <article name="Command-line parameters"
          link="/en/docs/switches.html"
          lang="en"
-         rev="4">
+         rev="5">
 
 <section>
 
@@ -67,7 +67,7 @@ The argument <i>signal</i> can be one of:
 <listitem>
 <literal>reload</literal>&mdash;reload configuration,
 start the new worker process with a new configuration,
-gracefully shut down old worker processes.
+gracefully shut down old worker processes
 </listitem>
 <listitem>
 <literal>reopen</literal>&mdash;reopen log files
