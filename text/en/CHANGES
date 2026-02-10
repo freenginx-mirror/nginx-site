@@ -1,4 +1,22 @@
 
+Changes with freenginx 1.29.5                                    10 Feb 2026
+
+    *) Feature: optimized SSL_sendfile() usage on FreeBSD.
+       Thanks to Gleb Smirnoff.
+
+    *) Bugfix: upstream servers were not marked as failed after a response
+       with status code 500, 502, 503, 504, or 429 if the code was listed in
+       the "proxy_next_upstream" directive, but switching to the next server
+       was not possible.
+
+    *) Bugfix: the "stale-if-error" cache control extension was not applied
+       if a backend returned a response with status code 500, 502, 503, 504,
+       or 429 and the code was listed in the "proxy_next_upstream"
+       directive.
+
+    *) Bugfix: in handling of premature backend responses.
+
+
 Changes with freenginx 1.29.4                                    16 Dec 2025
 
     *) Feature: support for GeoIP2 databases in the MaxMind DB (MMDB) format
